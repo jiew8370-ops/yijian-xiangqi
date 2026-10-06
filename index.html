@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>弈见 · 皮卡鱼象棋助手</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#"><span class="brand-mark">弈</span><span>弈见 <small>XIANGQI STUDIO</small></span></a>
+    <span class="local-badge"><i></i> 中国象棋 · 智能分析</span>
+  </header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">皮卡鱼 PIKAFISH · 象棋引擎</p><h1>选好你的阵营，<span>下一步，帮你算。</span></h1><p>录入对手的实际走法，轮到你时自动推荐应手。</p></div><span class="intro-seal" aria-hidden="true">观棋<br>有思</span></section>
+    <div id="file-notice" class="file-notice" hidden>新版使用皮卡鱼本地引擎。请双击同目录的「启动弈见.cmd」，使用自动打开的网页。<a href="http://127.0.0.1:8765">已经启动？进入分析台 →</a></div>
+    <div class="workspace">
+      <section class="board-card" aria-label="中国象棋棋盘">
+        <div class="player-choice"><label for="my-side">我执哪一方</label><select id="my-side"><option value="r">我执红方 · 先手</option><option value="b" selected>我执黑方 · 后手</option></select><span id="my-side-note">黑方在下，红方先走</span></div>
+        <div id="turn-guide" class="turn-guide" role="status" aria-live="polite"></div>
+        <div class="board-toolbar"><div class="tabs" role="group" aria-label="棋盘模式"><button id="play-mode" class="active" aria-pressed="true">走棋分析</button><button id="edit-mode" aria-pressed="false">手动摆盘</button></div><button id="flip" class="text-button">⇅ 翻转棋盘</button></div>
+        <div class="board-surround"><div id="board" class="board"><svg id="grid" viewBox="0 0 540 600" aria-hidden="true"></svg><div id="squares"></div><svg id="arrows" viewBox="0 0 540 600" aria-hidden="true"></svg></div></div>
+        <div class="board-caption"><span><i class="red-dot"></i> 红方 <span id="red-location">在下</span></span><span id="board-help">点击棋子，再点击落点</span><span>黑方 <span id="black-location">在上</span> <i class="black-dot"></i></span></div>
+        <div id="editor" class="editor" hidden><div class="editor-heading"><strong>选择棋子，再点击棋盘放置</strong><button id="eraser" class="small-button">橡皮擦</button></div><div id="palette" class="palette"></div><div class="editor-bottom"><span>可直接覆盖已有棋子；误操作可悔棋。</span><button id="clear-board" class="text-button">清空棋盘</button></div></div>
+        <div class="board-actions"><button id="reset">↺ 初始局面</button><button id="undo">↶ 悔棋</button><label class="turn-picker" title="只修改当前轮次，不改变你执红还是执黑">当前轮到 <select id="side"><option value="r">红方走</option><option value="b">黑方走</option></select></label></div>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </section>
+      <aside class="analysis-column">
+        <section class="analysis-card">
+          <div class="section-heading"><div><p class="eyebrow">PIKAFISH 2026-09-06</p><h2 id="analysis-title">帮我下黑方</h2></div><span id="turn-badge" class="turn-badge">对方行棋</span></div>
+          <p id="position-state" class="position-state">从当前局面，寻找下一步。</p>
+          <div class="search-controls"><label for="budget">思考时间</label><select id="budget"><option value="1000">快速 · 1 秒</option><option value="5000" selected>认真计算 · 5 秒</option><option value="15000">关键局面 · 15 秒</option><option value="30000">深入推演 · 30 秒</option></select></div>
+          <label class="auto-analysis"><input id="auto-analyze" type="checkbox" checked> 录入对手走法后，自动帮我分析</label>
+          <button id="analyze" class="primary-button">帮我计算最佳走法 <span>↗</span></button>
+          <div id="search-status" class="search-status" aria-live="polite">皮卡鱼 · 专注最佳着法</div>
+          <div id="empty-analysis" class="empty-analysis"><div class="empty-icon" aria-hidden="true">馬</div><h3 id="empty-title">先录入对手的走法</h3><p id="empty-help">你执黑方，红方先走。把对手实际走的那一步同步到棋盘。</p></div>
+          <div id="results" hidden><div class="candidates-title"><h3>给你的最佳着法</h3><span id="score-perspective">正分对我有利</span></div><div id="candidates"></div><div class="variation"><h3>参考变化 <span>我方 / 对方</span></h3><div id="pv"></div></div><button id="apply" class="apply-button">我已走这一步，同步棋盘</button><p class="score-note">分数固定以你执的一方为准，不代表胜率。参考变化是预测，请根据对手的实际落子更新棋盘。</p></div>
+        </section>
+        <section class="moves-card"><div class="section-heading"><h2>走子记录</h2><span id="move-count">0 步</span></div><div id="history" class="history"><p class="muted">落子后，记录会出现在这里。</p></div></section>
+        <details class="fen-card"><summary>局面 FEN <span>导入 / 复制</span></summary><label class="sr-only" for="fen">FEN 局面字符串</label><textarea id="fen" rows="3" spellcheck="false"></textarea><div class="fen-actions"><button id="import-fen">导入局面</button><button id="copy-fen">复制当前 FEN</button></div></details>
+      </aside>
+    </div>
+    <footer><span class="footer-brand">弈见 / PIKAFISH</span><p>皮卡鱼建议不保证获胜。只有已录入的走子历史会参与重复局面判断。<a href="https://github.com/official-pikafish/Pikafish/tree/Pikafish-2026-09-06" target="_blank" rel="noreferrer">引擎源码</a> · <a href="/engine/Copying.txt" target="_blank">引擎许可</a> · <a href="/engine/NNUE-License.md" target="_blank">网络许可</a></p></footer>
+  </main>
+  <script src="xiangqi.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

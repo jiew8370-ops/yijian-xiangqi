@@ -1,0 +1,5 @@
+*.log
+node_modules/
+engine/*.exe
+engine/Pikafish-Linux-x86-64-universal
+engine/*.nnue

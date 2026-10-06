@@ -1,0 +1,8 @@
+*.log
+test*.cjs
+launch.cjs
+engine/*.exe
+engine/Pikafish-Linux-x86-64-universal
+engine/*.nnue
+node_modules
+.git
